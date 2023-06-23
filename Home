@@ -1,0 +1,767 @@
+using System;
+
+using System.Linq;
+
+using System.Collections.Generic;
+
+
+
+namespace Electionboi
+
+{
+
+	public class Party
+
+	{
+
+		public string abbreviation;
+
+		public string name;
+
+		public string ideology;
+
+		public int votes;
+
+		public string leader;
+
+		public bool yourVotedParty;
+
+		public bool myParty;
+
+	}
+
+	
+
+	class VoteToken
+
+	{
+
+		public int voteToken;
+
+		public int money;
+
+		public bool castVote;
+
+		
+
+		public void TokenAmount()
+
+		{
+
+			if (voteToken <= 0)
+
+			{
+
+				castVote = false;
+
+			}
+
+			else
+
+			{
+
+				castVote = true;
+
+			}
+
+		}
+
+	}
+
+	
+
+	class GameManager
+
+	{
+
+		public bool start;
+
+		public bool buy;
+
+		public bool loan;
+
+		public bool loanTaken;
+
+		public int loanAmount;
+
+		public int credibility = 2;
+
+		public bool credible;
+
+		public bool partyCreated = false;
+
+		
+
+		public void MainMenu()
+
+		{
+
+			Console.WriteLine("The Vote Game");
+
+			Console.WriteLine("Start (A)");
+
+			Console.WriteLine("Buy VT (B)");
+
+			if (credibility >= 1)
+
+			{
+
+				if (!loanTaken)
+
+				{
+
+			    	Console.WriteLine("Take Loan (C)");
+
+				}
+
+				else
+
+				{
+
+					Console.WriteLine("Repay Loan (C)");
+
+				}
+
+		        Console.WriteLine("Create Party (D)");
+
+			}
+
+			string command = Console.ReadLine();
+
+			
+
+			if (command == "A")
+
+			{
+
+				start = true;
+
+			}
+
+			else if (command == "B")
+
+			{
+
+				buy = true;
+
+			}
+
+			else if (command == "C")
+
+			{
+
+				loan = true;
+
+			}
+
+			else if (command == "D")
+
+			{
+
+				credible = true;
+
+			}
+
+		}
+
+	}
+
+	
+
+    public static class Program 
+
+    {         
+
+        public static void Main()
+
+        {
+
+        	Random numGen = new Random();
+
+        	
+
+        	Party party1 = new Party()
+
+        	{
+
+        		abbreviation = "CPIM",
+
+        		name = "Communist Party of India (Marxist)",
+
+		        ideology = "Communism",
+
+		        votes = 0,
+
+		        leader = "Anand Kumar Rao",
+
+		        yourVotedParty = false,
+
+		        myParty = false
+
+	    	};
+
+	    	Party party2 = new Party()
+
+	    	{
+
+		    	abbreviation = "BJP",
+
+		    	name = "Bharatiya Janata Party",
+
+		    	ideology = "Right-Wing, hindutva",
+
+		    	votes = 0,
+
+		    	leader = "Mahendra Lodhi",
+
+		    	yourVotedParty = false,
+
+		    	myParty = false
+
+	    	};
+
+	    	Party party3 = new Party()
+
+	    	{
+
+		    	abbreviation = "INC",
+
+		    	name = "Indian National Congress",
+
+		    	ideology = "Left-Wing, secular",
+
+		    	votes = 0,
+
+		    	leader = "Rishikesh Gaddi",
+
+		    	yourVotedParty = false,
+
+		    	myParty = false
+
+	    	};
+
+	    	Party party4 = new Party()
+
+	    	{
+
+		    	abbreviation = "AAP",
+
+		    	name = "Aam Admi Party",
+
+		    	ideology = "Populism, secular",
+
+		    	votes = 0,
+
+		    	leader = "Kaju-rewall",
+
+		    	yourVotedParty = false,
+
+		    	myParty = false
+
+	    	};
+
+	    	Party party5 = new Party()
+
+	    	{
+
+	    		abbreviation = "AITC",
+
+	    		name = "All India Trinamool Congress",
+
+	    		ideology = "Liberalism, secular, bengali nationalism",
+
+	    		votes = 0,
+
+	    		leader = "Momo Chatterjee",
+
+	    		yourVotedParty = false,
+
+	    		myParty = false
+
+	    	};
+
+	    	Party party6 = new Party()
+
+	    	{
+
+	    		abbreviation = "BSP",
+
+	    		name = "Bahujan Samaj Party",
+
+	    		ideology = "Social equality, social justice",
+
+	    		votes = 0,
+
+	    		leader = "Mayanani",
+
+	    		yourVotedParty = false,
+
+	    		myParty = false
+
+	    	};
+
+	    	Party party7 = new Party()
+
+	    	{
+
+	    		abbreviation = "PFP",
+
+	    		name = "Progressive Front Party",
+
+	    		ideology = "Progressive, Capitalist",
+
+	    		votes = 0,
+
+	    		leader = "Nobita Nobi",
+
+	    		yourVotedParty = false,
+
+	    		myParty = false
+
+	    	};
+
+	    	VoteToken token1 = new VoteToken()
+
+	    	{
+
+	    		voteToken = 10,
+
+	    		money = 0
+
+	    	};
+
+	    	GameManager gameManager = new GameManager();
+
+	    	int year = 1952;
+
+	    	int youareright = 1;
+
+	    	string abbreviation = "RDA";
+
+	    	string name = "Random Party";
+
+	    	string ideology = "Nothing";
+
+	    	string leader = "Impostor";
+
+	    	List<Party> partyList = new List<Party>() {party1, party2, party3, party4, party5, party6, party7};
+
+	    	
+
+		   	while (true)
+
+	    	{
+
+	    		Console.Clear();
+
+	    		Console.WriteLine($"Year: {year} | Money: {token1.money} | VT: {token1.voteToken} | Credibility: {gameManager.credibility}%");
+
+	    	    if (gameManager.loanTaken)
+
+	    	    {
+
+	    	    	gameManager.loanAmount += 20;
+
+	    	    }
+
+	    		gameManager.MainMenu();
+
+	    		
+
+	        	if (gameManager.start)
+
+	        	{
+
+	        		if (gameManager.partyCreated)
+
+	        		{
+
+	        			Party myParty = new Party()
+
+	        			{
+
+	        				abbreviation = abbreviation,
+
+	        				name = name,
+
+	        				ideology = ideology,
+
+	        				votes = numGen.Next(1, 91),
+
+	        				leader = leader,
+
+	        				yourVotedParty = false,
+
+	        				myParty = true
+
+	        			};
+
+	        			
+
+	        			partyList.Add(myParty);
+
+	        		}
+
+	        		party1.votes = numGen.Next(1, 100);
+
+	        		party2.votes = numGen.Next(1, 100);
+
+	        		party3.votes = numGen.Next(1, 100);
+
+	        		party4.votes = numGen.Next(1, 100);
+
+	        		party5.votes = numGen.Next(1, 100);
+
+	        		party6.votes = numGen.Next(1, 100);
+
+	        		party7.votes = numGen.Next(1, 100);
+
+	        		
+
+	        		if (youareright >= 5)
+
+	        		{
+
+	        			gameManager.credibility += 1;
+
+	        		}
+
+	        		
+
+	        		Console.Clear();
+
+	            	StartingInfo();
+
+	    	
+
+	     	        foreach (Party info in partyList)
+
+	     	        {
+
+	     	        	if (info.yourVotedParty = true)
+
+	     	        	{
+
+	     	        		info.yourVotedParty = false;
+
+	     	        	}
+
+	     	        }
+
+	     	        
+
+	            	token1.TokenAmount();
+
+	     	
+
+	            	if (token1.castVote)
+
+	             	{
+
+	     	         	Console.WriteLine("---------------------------------------------------");
+
+	     	         	Console.WriteLine("Write the name of the party you want to vote.");
+
+	                	var yourVote = Console.ReadLine();
+
+	                	Console.WriteLine($"Vote tokens: {token1.voteToken}");
+
+	            	    int amount = int.Parse(Console.ReadLine());
+
+	     		
+
+	     	        	if (amount <= token1.voteToken)
+
+	     	        	{
+
+	     	                foreach (Party info in partyList)
+
+        	                {
+
+        	                	if (info.abbreviation == yourVote)
+
+        	                	{
+
+        	    	            	info.votes += amount;
+
+        	    	            	token1.voteToken -= amount;
+
+        	    	            	info.yourVotedParty = true;
+
+        	                	}
+
+            	            }
+
+	     	        	}
+
+	     	        	else
+
+	     	        	{
+
+	     	    	     	Console.WriteLine("Not enough token :(");
+
+	     	    	    	Console.ReadLine();
+
+	     	        	}
+
+	             	}
+
+                	Party winner = partyList.OrderByDescending(p => p.votes).FirstOrDefault();
+
+        	
+
+                 	Console.Clear();
+
+        	
+
+                	int i = 0;
+
+        	
+
+                	foreach (Party info in partyList)
+
+                	{
+
+        	        	i += 1;
+
+                		Console.WriteLine($"{i}) {info.abbreviation} got {info.votes} votes");
+
+                	}
+
+	    	
+
+	            	if (winner.votes != null)
+
+	            	{
+
+	        	    	Console.WriteLine("---------------------------------------------------");
+
+	        	        if (winner.myParty)
+
+	        	        {
+
+	        	        	Console.WriteLine($"Congratulation! Your party, {winner.name}, won the election by {winner.votes} votes");
+
+	        	        	Console.WriteLine($"Leader: {winner.leader}");
+
+	        	        	Console.WriteLine($"Ideology: {winner.ideology}");
+
+	        	        }
+
+	                	else if (winner.yourVotedParty)
+
+	                	{
+
+	        	        	Console.WriteLine($"Congratulation! Your voted party, {winner.name}, won the election by {winner.votes} votes.");
+
+	        	        	Console.WriteLine($"Leader: {winner.leader}");
+
+	                        Console.WriteLine($"Ideology: {winner.ideology}");
+
+	                        token1.money += 10 * youareright;
+
+	                        youareright += 1;
+
+	                	}
+
+	                	else
+
+	                	{
+
+	            	    	Console.WriteLine($"{winner.name} won by {winner.votes} votes.");
+
+	            	    	Console.WriteLine($"Leader: {winner.leader}");
+
+	        	            Console.WriteLine($"Ideology: {winner.ideology}");
+
+	        	            youareright -= 1;
+
+	                	}
+
+	            	}
+
+	             	else
+
+	            	{
+
+	    	    	Console.WriteLine("No clear winner");
+
+	            	}
+
+	            	
+
+	            	Console.ReadLine();
+
+	            	year += 5;
+
+	            	gameManager.start = false;
+
+	            	continue;
+
+	        	}
+
+	         	else if (gameManager.buy)
+
+	        	{
+
+	        		Console.Clear();
+
+	    	    	Console.WriteLine("How much VT you want to buy?");
+
+	    	    	int vtAmount = int.Parse(Console.ReadLine());
+
+	    	    	if (vtAmount <= token1.money)
+
+	    	    	{
+
+	    	    		token1.voteToken += vtAmount;
+
+	    	    		token1.money -= vtAmount;
+
+	    	    	}
+
+	    	    	else
+
+	    	    	{
+
+	    	    		Console.WriteLine("Not enough money :(");
+
+	    	    		Console.ReadLine();
+
+	    	    	}
+
+	    	    	gameManager.buy = false;
+
+	    	    	continue;
+
+	        	}
+
+	        	else if (gameManager.loan)
+
+	        	{
+
+	        		if (!gameManager.loanTaken)
+
+	        		{
+
+	        	    	Console.Write("Amount: ");
+
+	        	    	gameManager.loanAmount = int.Parse(Console.ReadLine());
+
+	        	    	if (gameManager.loanAmount <= 700)
+
+	        	    	{
+
+	        		    	token1.money += gameManager.loanAmount;
+
+	        		    	gameManager.loanTaken = true;
+
+	        	    	}
+
+	        		}
+
+	        		else
+
+	        		{
+
+	        			Console.WriteLine($"Repay amount: {gameManager.loanAmount}");
+
+	        			Console.Write("Repay: ");
+
+	        			int repayAmount = int.Parse(Console.ReadLine());
+
+	        			if (repayAmount <= token1.money)
+
+	        			{
+
+	        		    	gameManager.loanAmount -= repayAmount;
+
+	        		    	token1.money -= repayAmount;
+
+	        			}
+
+	        		}
+
+	        		continue;
+
+	        	}
+
+	         	else if (gameManager.credible)
+
+	         	{
+
+	         		Console.Clear();
+
+	         		Console.Write("Abbreviation: ");
+
+	         		abbreviation = Console.ReadLine();
+
+	         		Console.Write("Name: ");
+
+	         		name = Console.ReadLine();
+
+	         		Console.Write("Ideology: ");
+
+	         		ideology = Console.ReadLine();
+
+	         		Console.Write("Leader: ");
+
+	         		leader = Console.ReadLine();
+
+	         		gameManager.partyCreated = true;
+
+	         		continue;
+
+	         	}
+
+	         	
+
+	         	
+
+	         	break;
+
+	    	}
+
+        }
+
+        
+
+		static void StartingInfo()
+
+		{
+
+			Random numGen = new Random();
+
+			int generalElection = numGen.Next(1, 10);
+
+		    
+
+			if (generalElection > 7)
+
+			{
+
+				Console.WriteLine("Location: India");
+
+				Console.WriteLine("Type: general election");
+
+			}
+
+			else
+
+			{
+
+		    	string[] location = {"Tamil Nadu", "Himachal Pradesh", "Punjab", "Haryana", "Jharkhand", "Nagaland", "Kerala", "West Bengal", "Bihar", "Delhi", "Gujarat", "Rajasthan", "Jalishahi", "Sikkim", "Dadragarh", "Tripura", "Meghalaya", "Odisha", "Jammu & Kashmir", "Bengal (WB & Sikkim)"};
+
+		    
+
+		    	Console.WriteLine($"Location: {location[numGen.Next(0, location.Length)]}");
+
+		    	Console.WriteLine("Type: state election");
+
+			}
+
+		}
+
+    }
+
+}
