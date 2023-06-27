@@ -1,0 +1,585 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace Electionboi
+{
+	class Party
+	{
+		public string abbreviation;
+		public string name;
+		public string ideology;
+		public int votes;
+		public string leader;
+		public bool yourVotedParty;
+		public bool myParty;
+	}
+
+	class MyParty
+	{
+		public static string abbreviation;
+		public static string name;
+		public static string ideology;
+		public static string leader;
+		public static bool winner;
+		public static bool createParty;
+
+		public static void CreateParty()
+		{
+			Console.Clear();
+	  	Console.Write("Abbreviation: ");
+    	abbreviation = Console.ReadLine();
+    	Console.Write("Name: ");
+     	name = Console.ReadLine();
+      Console.Write("Ideology: ");
+      ideology = Console.ReadLine();
+    	Console.Write("Leader: ");
+      leader = Console.ReadLine();
+    	GameManager.partyCreated = true;
+    	createParty = false;
+		}
+
+	}
+
+	class Token
+	{
+		public static int voteToken = 10;
+		public static int money = 0;
+		public static bool castVote;
+
+		public static void TokenAmount()
+		{
+			if (voteToken <= 0)
+			{
+				castVote = false;
+			}
+			else
+			{
+				castVote = true;
+			}
+		}
+	}
+
+	class Loan
+	{
+		public static bool loan;
+		public static bool loanTaken;
+		public static int loanAmount;
+		
+		public static void LoanService()
+		{
+			Console.Clear();
+			if (!loanTaken)
+	   	{
+        Console.Write("Amount: ");
+        loanAmount = int.Parse(Console.ReadLine());
+      
+        if (loanAmount <= 700)
+      	{
+        	Token.money += loanAmount;
+          loanTaken = true;
+	      }
+	  	}
+    	else
+	    {
+      	Console.WriteLine($"Repay amount: {Loan.loanAmount}");
+      	Console.Write("Repay: ");
+      	int repayAmount = int.Parse(Console.ReadLine());
+        
+        if (repayAmount <= Token.money)
+       	{
+          Loan.loanAmount -= repayAmount;
+          Token.money -= repayAmount;
+	      }
+    	}
+      loan = false;
+		}
+	}
+
+	class Development
+	{
+		public string type;
+		public int improvement;
+		public bool good;
+		public static bool stats;
+	}
+
+	class Work
+	{
+		public static bool work;
+		public static int amount;
+
+		public static void YourWork()
+		{
+			Console.Clear();
+			Development infrastructure = new Development()
+			{
+			    type = "Transportation",
+			    improvement = 0,
+			    good = false
+			};
+			Development infrastructure1 = new Development()
+			{
+				type = "Energy",
+				improvement = 0,
+				good = false
+			};
+			Development infrastructure2 = new Development()
+			{
+				type = "Environmental",
+				improvement = 0,
+				good = false
+			};
+			Development infrastructure3 = new Development()
+			{
+				type = "Education",
+				improvement = 0,
+				good = false
+			};
+			Development education = new Development()
+			{
+				type = "Teacher Training",
+				improvement = 0,
+				good = false
+			};
+			Development education1 = new Development()
+			{
+				type = "Special Education",
+				improvement = 0,
+				good = false
+			};
+			Console.WriteLine("Infrastructure (A)");
+			Console.WriteLine("Education (B)");
+			string command = Console.ReadLine();
+			string command2;
+
+			if (command == "A")
+			{
+				Console.WriteLine("Improve Transportation (A)");
+		  	Console.WriteLine("Inprove Energy Production (B)");
+        Console.WriteLine("Improve Environmental Infra (C)");
+        Console.WriteLine("Improve Education Infra (D)");
+				command2 = Console.ReadLine();
+
+		    if (command2 == "A")
+		    {
+			    Console.WriteLine("How much will you invest in transpotation?");
+			  	amount = int.Parse(Console.ReadLine());
+			  	
+          if (amount <= Token.money)
+			  	{
+				  	infrastructure.improvement += amount / 20;
+				  	Token.money -= amount;
+			  	}
+		  	}
+		  	else if (command2 == "B")
+		  	{
+			  	Console.WriteLine("How much will you invest in energy production?");
+				  amount = int.Parse(Console.ReadLine());
+			   
+          if (amount <= Token.money)
+			  	{
+				  	infrastructure1.improvement += amount / 10;
+				  	Token.money -= amount;
+			  	}
+		    }
+		    else if (command2 == "C")
+		  	{
+			    Console.WriteLine("How much will you invest on environment infra?");
+			  	amount = int.Parse(Console.ReadLine());
+			    
+          if (amount <= Token.money)
+			    {
+				  	infrastructure2.improvement += amount / 10;
+				  	Token.money -= amount;
+			    }
+		   	}
+		  	else if (command2 == "D")
+		    {
+				  Console.WriteLine("How much will you invest on education infra?");
+				  amount = int.Parse(Console.ReadLine());
+
+				   if (amount <= Token.money)
+				   {
+				    	infrastructure3.improvement += amount / 10;
+				    	Token.money -= amount;
+				   }
+		   	}
+			}
+			else if (command == "B")
+			{
+				Console.WriteLine("Improve Teacher Training (A)");
+				Console.WriteLine("Improve Special Education (B)");
+				command2 = Console.ReadLine();
+
+				if (command2 == "A")
+		    {
+				    Console.WriteLine("How much will you invest on teacher training?");
+				    amount = int.Parse(Console.ReadLine());
+
+				    if (amount <= Token.money)
+				    {
+				    	education.improvement += amount / 10;
+				    	Token.money -= amount;
+				    }
+		  	}
+		    else if (command2 == "B")
+		    {
+				    Console.WriteLine("How much will you invest on special education?");
+				    amount = int.Parse(Console.ReadLine());
+
+				    if (amount <= Token.money)
+				    {
+				    	education1.improvement += amount / 10;
+				    	Token.money -= amount;
+				    }
+		    }
+			}
+			work = false;
+		}
+	}
+
+	class GameManager
+	{
+		public static bool start;
+		public static bool buy;
+		public static int credibility = 2;
+		public static bool credible;
+		public static bool partyCreated = false;
+
+		public static void MainMenu()
+		{
+			Console.WriteLine("The Vote Game");
+			Console.WriteLine("Start (A)");
+			Console.WriteLine("Buy VT (B)");
+      if (credibility >= 1)
+			{
+				credible = true;
+				if (!Loan.loanTaken)
+				{
+			    	Console.WriteLine("Take Loan (C)");
+				}
+				else
+				{
+					Console.WriteLine("Repay Loan (C)");
+				}
+			
+        if (!partyCreated)
+				{
+		      Console.WriteLine("Create Party (D)");
+				}
+			}
+
+			if (MyParty.winner)
+			{
+		    	Console.WriteLine("Work (E)");
+		    	Console.WriteLine("Stats (F)");
+			}
+
+			string command = Console.ReadLine();
+
+			if (command == "A")
+			{
+				start = true;
+			}
+			else if (command == "B")
+			{
+				buy = true;
+			}
+			else if (command == "C")
+			{
+				Loan.loan = true;
+			}
+			else if (command == "D")
+			{
+				MyParty.createParty = true;
+			}
+			else if (command == "E")
+			{
+				Work.work = true;
+			}
+			else if (command == "F")
+			{
+
+			}
+		}
+
+		public static void BuyVT()
+		{
+			Console.Clear();
+	    Console.WriteLine("How much VT you want to buy?");
+	    int vtAmount = int.Parse(Console.ReadLine());
+
+	    if (vtAmount <= Token.money)
+	  	{
+	      Token.voteToken += vtAmount;
+	    	Token.money -= vtAmount;
+	   	}
+	    else
+	  	{
+	    	Console.WriteLine("Not enough money :(");
+	    	Console.ReadLine();
+	  	}
+	  	GameManager.buy = false;
+		}
+
+		public static void StartingInfo()
+		{
+			Random numGen = new Random();
+			int generalElection = numGen.Next(1, 10);
+
+			if (generalElection > 7)
+			{
+				Console.WriteLine("Location: India");
+				Console.WriteLine("Type: general election");
+			}
+			else
+			{
+		    	string[] location = {"Tamil Nadu", "Himachal Pradesh", "Punjab", "Haryana", "Jharkhand", "Nagaland", "Kerala", "West Bengal", "Bihar", "Delhi", "Gujarat", "Rajasthan", "Jalishahi", "Sikkim", "Dadragarh", "Tripura", "Meghalaya", "Odisha", "Jammu & Kashmir", "Bengal (WB & Sikkim)"};
+		    	Console.WriteLine($"Location: {location[numGen.Next(0, location.Length)]}");
+		    	Console.WriteLine("Type: state election");
+			}
+		}
+	}
+
+	class Winner
+	{
+		public static int youareright = 1;
+	 	public static void WinnerDeciding()
+		{
+	   	Party party1 = new Party()
+      {
+        abbreviation = "CPIM",
+        name = "Communist Party of India (Marxist)",
+		    ideology = "Communism",
+		    votes = 0,
+	      leader = "Anand Kumar Rao",
+		    yourVotedParty = false,
+		    myParty = false
+	  	};
+	   	Party party2 = new Party()
+	  	{
+		    abbreviation = "BJP",
+		   	name = "Bharatiya Janata Party",
+		    ideology = "Right-Wing, hindutva",
+		    votes = 0,
+		    leader = "Mahendra Lodhi",
+		    yourVotedParty = false,
+		  	myParty = false
+	    };
+    	Party party3 = new Party()
+	  	{
+		    abbreviation = "INC",
+		  	name = "Indian National Congress",
+		    ideology = "Left-Wing, secular",
+		    votes = 0,
+		  	leader = "Rishikesh Gaddi",
+		   	yourVotedParty = false,
+		  	myParty = false
+	  	};
+	    Party party4 = new Party()
+	    {
+		    abbreviation = "AAP",
+		  	name = "Aam Admi Party",
+		  	ideology = "Populism, secular",
+		  	votes = 0,
+		  	leader = "Kaju-rewall",
+		   	yourVotedParty = false,
+		  	myParty = false
+	   	};
+	  	Party party5 = new Party()
+	    {
+	      abbreviation = "AITC",
+	    	name = "All India Trinamool Congress",
+	    	ideology = "Liberalism, secular, bengali nationalism",
+	    	votes = 0,
+	    	leader = "Momo Chatterjee",
+	    	yourVotedParty = false,
+	    	myParty = false
+	   	};
+	   	Party party6 = new Party()
+	  	{
+	    	abbreviation = "BSP",
+	     	name = "Bahujan Samaj Party",
+	      ideology = "Social equality, social justice",
+	    	votes = 0,
+	     	leader = "Mayanani",
+	      yourVotedParty = false,
+	    	myParty = false
+	  	};
+	   	Party party7 = new Party()
+	  	{
+	     	abbreviation = "PFP",
+	    	name = "Progressive Front Party",
+	    	ideology = "Progressive, Capitalist",
+	      votes = 0,
+	    	leader = "Nobita Nobi",
+	      yourVotedParty = false,
+	    	myParty = false
+	  	};
+	  	Random numGen = new Random();
+	    List<Party> partyList = new List<Party>() {party1, party2, party3, party4, party5, party6, party7};
+
+	   	if (GameManager.partyCreated)
+	    {
+	      	Party myParty = new Party()
+	      	{
+	        	abbreviation = MyParty.abbreviation,
+	        	name = MyParty.name,
+	        	ideology = MyParty.ideology,
+	        	votes = numGen.Next(1, 91),
+	        	leader = MyParty.leader,
+	          yourVotedParty = false,
+	        	myParty = true
+	      	};
+	      	partyList.Add(myParty);
+	  	}
+	   	party1.votes = numGen.Next(1, 100);
+	    party2.votes = numGen.Next(1, 100);
+	   	party3.votes = numGen.Next(1, 100);
+	   	party4.votes = numGen.Next(1, 100);
+	  	party5.votes = numGen.Next(1, 100);
+	  	party6.votes = numGen.Next(1, 100);
+	  	party7.votes = numGen.Next(1, 100);
+
+	  	if (youareright >= 5)
+	  	{
+	    	GameManager.credibility += 1;
+	   	}
+
+	  	Console.Clear();
+	   	GameManager.StartingInfo();
+	    foreach (Party info in partyList)
+	    {
+	     		if (info.yourVotedParty = true)
+	     		{
+	     	     	info.yourVotedParty = false;
+	     	  }
+	    }
+	   	Token.TokenAmount();
+
+	   	if (Token.castVote)
+	  	{ 	
+        Console.WriteLine("---------------------------------------------------");
+	     	Console.WriteLine("Write the name of the party you want to vote.");
+	     	var yourVote = Console.ReadLine();
+	     	Console.WriteLine($"Vote tokens: {Token.voteToken}");
+	      int amount = int.Parse(Console.ReadLine());
+
+	     	 if (amount <= Token.voteToken)
+	    	 {
+	     	   foreach (Party info in partyList)
+           {
+        	  	if (info.abbreviation == yourVote)
+        	  	{
+        	     	info.votes += amount;
+        	    	Token.voteToken -= amount;
+        	     	info.yourVotedParty = true;
+            	}
+           }
+	     	 }
+	    	 else
+	    	 {
+	        	Console.WriteLine("Not enough token :(");
+	     	  	Console.ReadLine();
+	       }
+	     }
+       Console.Clear();
+    	 int i = 0;
+
+      	foreach (Party info in partyList)
+       	{
+        	 	i += 1;
+            Console.WriteLine($"{i}) {info.abbreviation} got {info.votes} votes");
+       	}
+
+	     	Party winner = partyList.OrderByDescending(p => p.votes).FirstOrDefault();
+	    
+        if (winner.votes != null)
+	     	{
+	        	Console.WriteLine("---------------------------------------------------");
+	          if (winner.myParty)
+	          {
+	        	  	Console.WriteLine($"Congratulation! Your party, {winner.name}, won the election by {winner.votes} votes");
+	        	   	Console.WriteLine($"Leader: {winner.leader}");
+	        	   	Console.WriteLine($"Ideology: {winner.ideology}");
+	        	   	MyParty.winner = true;
+	          }
+	         	else if (winner.yourVotedParty)
+	         	{
+	        	  	Console.WriteLine($"Congratulation! Your voted party, {winner.name}, won the election by {winner.votes} votes.");
+	        	   	Console.WriteLine($"Leader: {winner.leader}");
+	              Console.WriteLine($"Ideology: {winner.ideology}");
+	              Token.money += 10 * youareright;
+	              youareright += 1;
+	         	}
+	        	else
+	          {
+	             	Console.WriteLine($"{winner.name} won by {winner.votes} votes.");
+	            	Console.WriteLine($"Leader: {winner.leader}");
+	              Console.WriteLine($"Ideology: {winner.ideology}");
+	              youareright -= 1;
+	         	}
+	     	}
+	    	else
+	      {
+	    	    Console.WriteLine("No clear winner");
+	    	}
+	   	}
+	}
+
+  public static class Program 
+  {         
+     public static void Main()
+     {
+	    	int year = 1952;
+
+		   	while (true)
+	    	{
+	    		Console.Clear();
+	    		Console.WriteLine($"Year: {year} | Money: {Token.money} | VT: {Token.voteToken} | Credibility: {GameManager.credibility}%");
+
+	    	  if (Loan.loanTaken)
+	    	  {
+	    	    	Loan.loanAmount += 20;
+	    	  }
+
+	    		GameManager.MainMenu();
+
+	      	if (GameManager.start)
+	      	{
+	        		Winner.WinnerDeciding();
+	          	Console.ReadLine();
+	          	year += 5;
+	            GameManager.start = false;
+	           	continue;
+	      	}
+	        else if (GameManager.buy)
+	       	{
+	        		GameManager.BuyVT();
+	    	    	continue;
+	      	}
+	      	else if (Loan.loan)
+	      	{
+	        		Loan.LoanService();
+	        		continue;
+	        }
+	      	else if (GameManager.credible && MyParty.createParty)
+	       	{
+	         		MyParty.CreateParty();
+	         		continue;
+	      	}
+	      	else if (Work.work)
+	      	{
+	         		Work.YourWork();
+	         		continue;
+	      	}
+	      	else if (Development.stats)
+	      	{
+	         		continue;
+	      	}
+	      	break;
+	    	}
+      }
+    }
+}
